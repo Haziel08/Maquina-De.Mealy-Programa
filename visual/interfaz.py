@@ -47,3 +47,10 @@ def dibujar_diagrama_bloques(entradas, salidas):
 
     # Piso del bloque
     print(f"{' ':>12} |_______________________|")
+
+def imprimir_tabla(datos, encabezados):
+    """
+    Recibe una lista de listas y los nombres de las columnas,
+    y los imprime en formato de tabla ASCII (R2/R4).
+    """
+    print(tabulate(datos, headers=encabezados, tablefmt="grid"))
