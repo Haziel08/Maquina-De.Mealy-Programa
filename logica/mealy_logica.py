@@ -18,7 +18,6 @@ def ejecucion_principal(interfaz):
     
     # --- PASO 1: CONFIGURACIÓN DE ENTRADAS ---
     print("\n--- PASO 1: CONFIGURACIÓN DE ENTRADAS ---")
-    # Usamos nuestro nuevo método para validar
     num_entradas = leer_entero("¿Cuántas entradas binarias tiene el sistema?: ")
     
     nombres_entradas = []
@@ -28,20 +27,45 @@ def ejecucion_principal(interfaz):
     
     # --- PASO 2: CONFIGURACIÓN DE SALIDAS ---
     print("\n--- PASO 2: CONFIGURACIÓN DE SALIDAS ---")
-    # Volvemos a usar el método para validar
     num_salidas = leer_entero("¿Cuántas salidas binarias tiene el sistema?: ")
     
     nombres_salidas = []
     for i in range(num_salidas):
         nombre = input(f"  -> Ingrese el nombre para la salida {i+1}: ")
         nombres_salidas.append(nombre)
+
+    # --- PASO 3: NÚMERO DE ESTADOS ---
+    print("\n--- PASO 3: CONFIGURACIÓN DE ESTADOS ---")
+    num_estados = leer_entero("¿Cuántos estados tiene la máquina (N)?: ")
+
+    # --- PASO 4: MENÚ DE CODIFICACIÓN ---
+    print("\n--- PASO 4: SELECCIÓN DE CODIFICACIÓN ---")
+    print("1. Binario")
+    print("2. Gray")
+    print("3. One-Hot")
     
-    # --- VERIFICACIÓN TOTAL ---
-    print("\n" + "="*30)
-    print("[ VERIFICACIÓN DE DATOS ]")
-    print(f"Entradas ({num_entradas}): {nombres_entradas}")
-    print(f"Salidas  ({num_salidas}): {nombres_salidas}")
-    print("="*30)
+    # Validamos que la opción esté entre 1 y 3
+    while True:
+        opcion_cod = leer_entero("Seleccione el tipo de codificación: ")
+        if 1 <= opcion_cod <= 3:
+            break
+        print("Error: Opción no válida. Elija 1, 2 o 3.")
+
+    # Guardamos el nombre de la codificación
+    tipos = {1: "Binario", 2: "Gray", 3: "One-Hot"}
+    codificacion_elegida = tipos[opcion_cod]
     
-    print("\nTodos los nombres han sido validados y capturados.")
+    # --- VERIFICACIÓN FINAL ---
+    interfaz.mostrar_encabezado() 
+    print("\n" + "="*40)
+    print("[ RESUMEN DE CONFIGURACIÓN ]")
+    print(f"Entradas: {nombres_entradas}")
+    print(f"Salidas:  {nombres_salidas}")
+    print(f"Estados:  {num_estados}")
+    print(f"Codificación elegida: {codificacion_elegida}")
+    print("="*40)
+    
+    interfaz.dibujar_diagrama_bloques(nombres_entradas, nombres_salidas)
+    
+    print("\nDiagrama generado según los nombres proporcionados.")
     input("\nPresione Enter para volver al menú...")

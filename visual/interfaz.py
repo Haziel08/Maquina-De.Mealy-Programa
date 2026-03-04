@@ -16,17 +16,34 @@ def mostrar_menu_principal():
     opcion = input("\nSeleccione una opción: ")
     return opcion
 
-def dibujar_bloques(entradas, salidas):
-    print("\n(R1) DIAGRAMA A BLOQUES")
-    print("      " + "_"*25)
-    max_len = max(len(entradas), len(salidas))
-    for i in range(max_len):
-        ent = entradas[i].strip() if i < len(entradas) else ""
-        sal = salidas[i].strip() if i < len(salidas) else ""
-        flecha_ent = "--->" if ent else "    "
-        flecha_sal = "--->" if sal else ""
-        print(f"{ent:>10} {flecha_ent}|   MÁQUINA MEALY   |{flecha_sal} {sal}")
-    print("      " + "‾"*25)
+def dibujar_diagrama_bloques(entradas, salidas):
+    """
+    Dibuja un diagrama de bloques ASCII dinámico (R1).
+    Muestra entradas a la izquierda y salidas a la derecha.
+    """
+    print("\n(R1) DIAGRAMA A BLOQUES:")
+    
+    # Determinamos cuántas líneas tendrá el diagrama según el mayor número de pines
+    max_lineas = max(len(entradas), len(salidas))
+    
+    # Techo del bloque
+    print(f"{' ':>12}  _______________________")
+    
+    for i in range(max_lineas):
+        # Lógica para mostrar nombre de entrada o espacio vacío
+        etiqueta_ent = entradas[i] if i < len(entradas) else ""
+        flecha_ent = "--->" if i < len(entradas) else "    "
+        
+        # Lógica para mostrar nombre de salida o espacio vacío
+        etiqueta_sal = salidas[i] if i < len(salidas) else ""
+        flecha_sal = "--->" if i < len(salidas) else ""
+        
+        # Texto central del bloque (solo en la línea media o distribuido)
+        contenido_bloque = "       MEALY       " if i == max_lineas // 2 else "                   "
+        
+        # Construcción de la línea
+        # {etiqueta_ent:>8} alinea el nombre a la derecha en 8 espacios
+        print(f"{etiqueta_ent:>10} {flecha_ent}|{contenido_bloque}|{flecha_sal} {etiqueta_sal}")
 
-def imprimir_tabla(filas, encabezados):
-    print(tabulate(filas, headers=encabezados, tablefmt="grid"))
+    # Piso del bloque
+    print(f"{' ':>12} |_______________________|")
